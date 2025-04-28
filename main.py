@@ -49,10 +49,6 @@ async def display_warehouse_info(message: types.Message):
             # Формирование ссылок для Яндекс Навигатора с использованием координат
             lat = warehouse['latitude']
             lon = warehouse['longitude']
-
-            # Ссылка на схему проезда в Яндекс Картах
-            map_url = f"https://yandex.ru/maps/?ll={lon},{lat}&z=12"
-            response += f"**Схема проезда:** [Показать на карте]({map_url})\n"
             
             # Ссылка на маршрут в Яндекс Картах
             route_url = f"https://yandex.ru/maps/?rtext=~{lat},{lon}"
