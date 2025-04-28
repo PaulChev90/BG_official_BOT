@@ -57,15 +57,10 @@ async def search_prompt(message: types.Message):
 @dp.message_handler(lambda message: message.text == "📞 Контакты")
 async def show_contacts(message: types.Message):
     await message.answer(
-        "Связаться с нами:
-
-"
-        "Телефон: 8 800 222 24 12
-"
-        "Email: info@bglogistic.ru
-
-"
-        "[WhatsApp](https://wa.me/78002222412) | [Telegram](https://t.me/BGLogisticSupport)",
+        'Связаться с нами:'
+        'Телефон: 8 800 222 24 12'
+        'Email: info@bglogistic.ru'
+        '[WhatsApp](https://wa.me/78002222412) | [Telegram](https://t.me/BGLogisticSupport)',
         parse_mode="Markdown",
         disable_web_page_preview=True
     )
