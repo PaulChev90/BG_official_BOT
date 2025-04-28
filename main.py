@@ -20,7 +20,7 @@ async def start_handler(message: types.Message):
     buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
     keyboard.add(*buttons)
     await message.answer(
-        'Добро пожаловать в официальный бот компании ООО «Би Джи»!\nВыберите нужный раздел:',
+        'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
         reply_markup=keyboard
     )
 
@@ -58,7 +58,18 @@ async def display_warehouse_info(message: types.Message):
             response = f"**Склад {warehouse['name']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-            response += f"**Схема проезда:** [Открыть]({warehouse.get('map_link', '')})\n"
+
+            # Ссылка на схему проезда в Яндекс Навигаторе
+            if warehouse.get('map_link'):
+                lat, lon = warehouse['map_link'].split('=')[1].split(',')  # Получаем координаты из ссылки
+                map_url = f"yandexnavi://build_route_on_map?lat_to={lat}&lon_to={lon}"
+                response += f"**Схема проезда:** [Показать на карте]({map_url})\n"
+            
+            # Ссылка на маршрут в Яндекс Навигаторе
+            if warehouse.get('route_link'):
+                lat, lon = warehouse['route_link'].split('=')[1].split(',')  # Получаем координаты из ссылки
+                route_url = f"yandexnavi://build_route?lat_to={lat}&lon_to={lon}"
+                response += f"**Маршрут:** [Показать маршрут]({route_url})\n"
 
             # Добавляем кнопку "⬅️ Назад"
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
