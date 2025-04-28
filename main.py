@@ -81,27 +81,16 @@ async def handle_city_or_search(message: types.Message):
     if matching_warehouses:
         for warehouse in matching_warehouses:
             await message.answer(
-                f"**Склад в {warehouse['city']}:**
-
-"
-                f"**Адрес:** {warehouse['address']}
-"
-                f"**Телефон:** {warehouse['phone']}
-"
-                f"**Класс склада:** {warehouse['class']}
-"
-                f"**Вместимость:** {warehouse['capacity']}
-"
-                f"**Пропускная способность:** {warehouse['throughput']}
-"
-                f"**Температурный режим:** {warehouse['temperature']}
-"
-                f"**Парковка:** {warehouse['parking']}
-"
-                f"**Ж/д ветка:** {warehouse['railway']}
-
-"
-                f"[Схема проезда]({warehouse['map_link']})",
+                f'**Склад в {warehouse['city']}:**'
+                f'**Адрес:** {warehouse['address']}'
+                f'**Телефон:** {warehouse['phone']}'
+                f'**Класс склада:** {warehouse['class']}'
+                f'**Вместимость:** {warehouse['capacity']}'
+                f'**Пропускная способность:** {warehouse['throughput']}'
+                f'**Температурный режим:** {warehouse['temperature']}'
+                f'**Парковка:** {warehouse['parking']}'
+                f'**Ж/д ветка:** {warehouse['railway']}'
+                f'[Схема проезда]({warehouse['map_link']})',
                 parse_mode="Markdown",
                 disable_web_page_preview=True
             )
