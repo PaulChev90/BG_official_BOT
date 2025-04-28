@@ -1,6 +1,8 @@
-from aiogram import Bot, Dispatcher, executor, types
-import json
 import os
+import json
+from flask import Flask, request
+from aiogram import Bot, Dispatcher, types
+from aiogram.utils.executor import start_webhook
 
 # Получаем токен бота из переменных окружения (безопасно для деплоя)
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -15,13 +17,33 @@ with open('warehouses.json', 'r', encoding='utf-8') as f:
 # Получение списка складов
 warehouse_names = sorted(set(warehouse["name"] for warehouse in warehouses))
 
+# Создаем Flask приложение для обработки запросов
+app = Flask(__name__)
+
+# URL для webhook
+WEBHOOK_URL = f'https://{os.getenv("bg-official-bot.onrender.com")}/{BOT_TOKEN}'
+
+@app.route(f'/{BOT_TOKEN}', methods=['POST'])
+async def handle_webhook():
+    json_str = await request.get_data(as_text=True)
+    update = types.Update(**json.loads(json_str))
+    await dp.process_update(update)
+    return "OK"
+
+
+@app.route("/")
+def index():
+    return "Bot is running!"
+
+
+# Обработка команды "📍 Список складов"
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
     keyboard.add(*buttons)
     await message.answer(
-        'Добро пожаловать в официальный бот компании ООО «Би Джи»!\nВыберите нужный раздел:',
+        'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
         reply_markup=keyboard
     )
 
@@ -88,5 +110,18 @@ async def about_company(message: types.Message):
         'Больше информации на сайте: https://bg-logistic.ru/'
     )
 
+
+# Настройка webhook для бота
+async def on_start():
+    # Настройка webhook
+    await bot.set_webhook(WEBHOOK_URL)
+
+
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=f'/{BOT_TOKEN}',
+        on_start=on_start,
+        host='0.0.0.0',
+        port=10000
+    )
