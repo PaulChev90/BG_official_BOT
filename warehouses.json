@@ -66,5 +66,27 @@
         "name": "ОП Копейск",
         "address": "проспект Победы, 75, Копейск, Челябинская область, 456620",
         "phone": "+7(351)750-06-26",
-        "map_link": "https://yandex.ru/maps/-/CHfSz_
+        "map_link": "https://yandex.ru/maps/-/CHfSzN-t",
+        "route_link": "https://yandex.ru/maps/?rtext=55.114729, 61.541379",
+        "federal_district": "Уральский",
+        "city": "Копейск"
+    },
+    {
+        "name": "ОП Толмачёво",
+        "address": "улица 3307-й километр, 16/1, село Толмачёво, Новосибирский район",
+        "phone": "+7(953)789-48-59",
+        "map_link": "https://yandex.ru/maps/-/CHfSz0ON",
+        "route_link": "https://yandex.ru/maps/?rtext=55.007251, 82.538376",
+        "federal_district": "Сибирский",
+        "city": "Толмачёво"
+    },
+    {
+        "name": "ОП Ардон",
+        "address": "Привокзальная улица, 11, Ардон, Республика Северная Осетия — Алания",
+        "phone": "+7(988)838-28-78",
+        "map_link": "https://yandex.ru/maps/-/CHfSzXLZ",
+        "route_link": "https://yandex.ru/maps/?rtext=43.183164, 44.273424",
+        "federal_district": "Южный",
+        "city": "Ардон"
+    }
 ]
