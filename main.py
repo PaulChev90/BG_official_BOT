@@ -20,7 +20,7 @@ async def start_handler(message: types.Message):
     buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
     keyboard.add(*buttons)
     await message.answer(
-        'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
+        'Добро пожаловать в официальный бот компании ООО «Би Джи»!\nВыберите нужный раздел:',
         reply_markup=keyboard
     )
 
@@ -55,7 +55,7 @@ async def display_warehouse_info(message: types.Message):
     
     if matching_warehouses:
         for warehouse in matching_warehouses:
-            response = f"**Склад {warehouse['name']} в {warehouse['city']}:**\n"
+            response = f"**Склад {warehouse['name']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
             response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
