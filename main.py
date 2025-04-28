@@ -12,75 +12,66 @@ dp = Dispatcher(bot)
 with open('warehouses.json', 'r', encoding='utf-8') as f:
     warehouses = json.load(f)
 
-# Получение списка федеральных округов
-federal_districts = sorted(set(warehouse["federal_district"] for warehouse in warehouses))
+# Получение списка городов
+cities = sorted(set(warehouse["city"] for warehouse in warehouses))
 
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = ["📍 Список складов", "🔍 Поиск склада", "📞 Контакты", "ℹ️ О компании"]
+    buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
     keyboard.add(*buttons)
     await message.answer(
-        'Добро пожаловать в официальный бот компании «Би Джи»! Выберите нужный раздел:',
+        'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
         reply_markup=keyboard
     )
 
 # Обработка команды "📍 Список складов"
 @dp.message_handler(lambda message: message.text == "📍 Список складов")
-async def list_districts(message: types.Message):
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for district in federal_districts:
-        keyboard.add(district)
-    keyboard.add("⬅️ Назад")
-    await message.answer("Выберите федеральный округ:", reply_markup=keyboard)
-
-# Обработка выбора федерального округа
-@dp.message_handler(lambda message: message.text in federal_districts)
 async def list_cities(message: types.Message):
-    selected_district = message.text
-    cities = sorted(set(
-        warehouse["city"] for warehouse in warehouses if warehouse["federal_district"] == selected_district
-    ))
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for city in cities:
         keyboard.add(city)
     keyboard.add("⬅️ Назад")
-    await message.answer(f"Выберите город в {selected_district}:", reply_markup=keyboard)
+    await message.answer("Выберите город:", reply_markup=keyboard)
 
 # Обработка выбора города
-@dp.message_handler(lambda message: message.text in [w['city'] for w in warehouses])
-async def display_warehouse_info(message: types.Message):
+@dp.message_handler(lambda message: message.text in cities)
+async def list_warehouses(message: types.Message):
     selected_city = message.text
-    matching_warehouses = [w for w in warehouses if w["city"].lower() == selected_city.lower()]
+    warehouses_in_city = sorted(set(
+        warehouse["name"] for warehouse in warehouses if warehouse["city"].lower() == selected_city.lower()
+    ))
+    
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    for warehouse_name in warehouses_in_city:
+        keyboard.add(warehouse_name)
+    keyboard.add("⬅️ Назад")
+    
+    await message.answer(f"Выберите склад в городе {selected_city}:", reply_markup=keyboard)
+
+# Обработка выбора склада
+@dp.message_handler(lambda message: message.text in [w['name'] for w in warehouses])
+async def display_warehouse_info(message: types.Message):
+    selected_warehouse_name = message.text
+    matching_warehouses = [w for w in warehouses if w["name"].lower() == selected_warehouse_name.lower()]
     
     if matching_warehouses:
         for warehouse in matching_warehouses:
-            await message.answer(
-                f"**Склад в {warehouse['city']}:**\n"
-                f"**Адрес:** {warehouse['address']}\n"
-                f"**Телефон:** {warehouse['phone']}\n"
-                f"**Класс склада:** {warehouse['class']}\n"
-                f"**Вместимость:** {warehouse['capacity']}\n"
-                f"**Пропускная способность:** {warehouse['throughput']}\n"
-                f"**Температурный режим:** {warehouse['temperature']}\n"
-                f"**Парковка:** {warehouse['parking']}\n"
-                f"**Ж/д ветка:** {warehouse['railway']}\n"
-                f"[Схема проезда]({warehouse['map_link']})",
-                parse_mode="Markdown",
-                disable_web_page_preview=True
-            )
+            # Выводим только те данные, которые есть в файле JSON
+            response = f"**Склад {warehouse['name']} в {warehouse['city']}:**\n"
+            response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
+            response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
+            response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
+            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})"
+            
+            await message.answer(response, parse_mode="Markdown", disable_web_page_preview=True)
     else:
-        await message.answer("К сожалению, склад в этом городе не найден. Попробуйте ещё раз.")
+        await message.answer("К сожалению, склад с таким названием не найден. Попробуйте ещё раз.")
 
 # Обработка команды "⬅️ Назад"
 @dp.message_handler(lambda message: message.text == "⬅️ Назад")
 async def go_back(message: types.Message):
     await start_handler(message)
-
-# Обработка команды "🔍 Поиск склада"
-@dp.message_handler(lambda message: message.text == "🔍 Поиск склада")
-async def search_prompt(message: types.Message):
-    await message.answer("Введите название города для поиска склада:")
 
 # Обработка команды "📞 Контакты"
 @dp.message_handler(lambda message: message.text == "📞 Контакты")
@@ -106,26 +97,18 @@ async def about_company(message: types.Message):
 # Если пользователь ввел данные, которые не соответствуют командам
 @dp.message_handler()
 async def handle_unrecognized_message(message: types.Message):
-    # Проверим, является ли введенный текст названием города
     city_name = message.text.strip()
     matching_warehouses = [w for w in warehouses if w["city"].lower() == city_name.lower()]
     
     if matching_warehouses:
         for warehouse in matching_warehouses:
-            await message.answer(
-                f"**Склад в {warehouse['city']}:**\n"
-                f"**Адрес:** {warehouse['address']}\n"
-                f"**Телефон:** {warehouse['phone']}\n"
-                f"**Класс склада:** {warehouse['class']}\n"
-                f"**Вместимость:** {warehouse['capacity']}\n"
-                f"**Пропускная способность:** {warehouse['throughput']}\n"
-                f"**Температурный режим:** {warehouse['temperature']}\n"
-                f"**Парковка:** {warehouse['parking']}\n"
-                f"**Ж/д ветка:** {warehouse['railway']}\n"
-                f"[Схема проезда]({warehouse['map_link']})",
-                parse_mode="Markdown",
-                disable_web_page_preview=True
-            )
+            response = f"**Склад в {warehouse['city']}:**\n"
+            response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
+            response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
+            response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
+            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})"
+            
+            await message.answer(response, parse_mode="Markdown", disable_web_page_preview=True)
     else:
         await message.answer("К сожалению, склад в этом городе не найден. Попробуйте ещё раз.")
 
