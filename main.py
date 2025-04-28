@@ -58,8 +58,7 @@ async def display_warehouse_info(message: types.Message):
             response = f"**Склад {warehouse['name']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-            response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
-            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})\n"
+            response += f"**Схема проезда:** [Открыть]({warehouse.get('map_link', '')})\n"
 
             # Добавляем кнопку "⬅️ Назад"
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
