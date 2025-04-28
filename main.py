@@ -58,7 +58,8 @@ async def display_warehouse_info(message: types.Message):
             response = f"**Склад {warehouse['name']} в {warehouse['city']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-            response += f"**Схема проезда:** [Показать на карте]({warehouse.get('map_link', '')})\n"
+            response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
+            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})\n"
 
             # Добавляем кнопку "⬅️ Назад"
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -93,23 +94,6 @@ async def about_company(message: types.Message):
         'У нас — сеть современных складов класса A и B в ключевых регионах страны.\n'
         'Больше информации на сайте: https://bg-logistic.ru/'
     )
-
-# Если пользователь ввел данные, которые не соответствуют командам
-@dp.message_handler()
-async def handle_unrecognized_message(message: types.Message):
-    city_name = message.text.strip()
-    matching_warehouses = [w for w in warehouses if w["city"].lower() == city_name.lower()]
-    
-    if matching_warehouses:
-        for warehouse in matching_warehouses:
-            response = f"**Склад в {warehouse['city']}:**\n"
-            response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
-            response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-            response += f"**Схема проезда:** [Показать на карте]({warehouse.get('map_link', '')})\n"
-            
-            await message.answer(response, parse_mode="Markdown", disable_web_page_preview=True)
-    else:
-        await message.answer("К сожалению, склад в этом городе не найден. Попробуйте ещё раз.")
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
