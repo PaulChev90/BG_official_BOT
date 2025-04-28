@@ -12,13 +12,12 @@ dp = Dispatcher(bot)
 with open('warehouses.json', 'r', encoding='utf-8') as f:
     warehouses = json.load(f)
 
-# Получение списка городов
 cities = sorted(set(warehouse["city"] for warehouse in warehouses))
 
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
+    buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании", "💬 FAQ"]
     keyboard.add(*buttons)
     await message.answer(
         'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
@@ -46,10 +45,9 @@ async def list_warehouses(message: types.Message):
     for warehouse_name in warehouses_in_city:
         keyboard.add(warehouse_name)
     keyboard.add("⬅️ Назад")
-    
     await message.answer(f"Выберите склад в городе {selected_city}:", reply_markup=keyboard)
 
-# Обработка выбора склада
+# Обработка выбора склада и отображение информации о складе
 @dp.message_handler(lambda message: message.text in [w['name'] for w in warehouses])
 async def display_warehouse_info(message: types.Message):
     selected_warehouse_name = message.text
@@ -57,14 +55,20 @@ async def display_warehouse_info(message: types.Message):
     
     if matching_warehouses:
         for warehouse in matching_warehouses:
-            # Выводим только те данные, которые есть в файле JSON
             response = f"**Склад {warehouse['name']} в {warehouse['city']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
             response += f"**Схема проезда:** [Ссылка]({warehouse.get('map_link', '')})\n"
-            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})"
-            
-            await message.answer(response, parse_mode="Markdown", disable_web_page_preview=True)
+            response += f"**Маршрут:** [Ссылка]({warehouse.get('route_link', '')})\n"
+
+            # Добавляем кнопки с быстрыми действиями
+            keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            button_phone = types.KeyboardButton("📞 Позвонить")
+            button_route = types.KeyboardButton("🛣 Построить маршрут")
+            keyboard.add(button_phone, button_route)
+            keyboard.add("⬅️ Назад")
+
+            await message.answer(response, parse_mode="Markdown", reply_markup=keyboard)
     else:
         await message.answer("К сожалению, склад с таким названием не найден. Попробуйте ещё раз.")
 
@@ -93,6 +97,34 @@ async def about_company(message: types.Message):
         'У нас — сеть современных складов класса A и B в ключевых регионах страны.\n'
         'Больше информации на сайте: https://bg-logistic.ru/'
     )
+
+# Обработка команды "💬 FAQ"
+@dp.message_handler(lambda message: message.text == "💬 FAQ")
+async def faq(message: types.Message):
+    await message.answer(
+        "Часто задаваемые вопросы:\n"
+        "1. Как найти ближайший склад?\n"
+        "2. Какие типы складов существуют?\n"
+        "3. Как забронировать склад?"
+    )
+
+# Обработка быстрого действия "📞 Позвонить"
+@dp.message_handler(lambda message: message.text == "📞 Позвонить")
+async def call_phone(message: types.Message):
+    await message.answer("Позвоните по номеру: +7(800) 222-24-12")
+
+# Обработка быстрого действия "🛣 Построить маршрут"
+@dp.message_handler(lambda message: message.text == "🛣 Построить маршрут")
+async def build_route(message: types.Message):
+    # Для упрощения, просто покажем ссылку на построение маршрута (можно настроить динамически)
+    warehouse_name = message.text.strip()
+    matching_warehouses = [w for w in warehouses if w['name'] == warehouse_name]
+    
+    if matching_warehouses:
+        warehouse = matching_warehouses[0]
+        await message.answer(f"Построить маршрут для склада {warehouse['name']}: {warehouse['route_link']}")
+    else:
+        await message.answer("Ошибка при построении маршрута. Попробуйте еще раз.")
 
 # Если пользователь ввел данные, которые не соответствуют командам
 @dp.message_handler()
