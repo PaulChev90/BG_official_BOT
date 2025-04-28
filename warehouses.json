@@ -3,28 +3,25 @@
         "name": "ОП Горелово",
         "address": "Волхонское шоссе, 9/2, территория Северная часть производственной зоны Горелово, Виллозское городское поселение, Ломоносовский район, Ленинградская область",
         "phone": "+7(921)928-55-73",
-        "map_link": "https://yandex.ru/maps/-/CHfSnSI-",
-        "route_link": "https://yandex.ru/maps/?rtext=59.788352, 30.219623",
-        "federal_district": "Северо-Западный",
-        "city": "Ленинградская обл."
+        "latitude": 59.788352,
+        "longitude": 30.219623,
+        "additional_inf": ""
     },
     {
         "name": "ОП Всеволожск",
         "address": "Дизельная улица, 2А, Всеволожск, Ленинградская область",
         "phone": "+7(921)589-87-82",
-        "map_link": "https://yandex.ru/maps/-/CHfSr40z",
-        "route_link": "https://yandex.ru/maps/?rtext=60.004874, 30.794392",
-        "federal_district": "Северо-Западный",
-        "city": "Ленинградская обл."
+        "latitude": 60.004874,
+        "longitude": 30.794392,
+        "additional_inf": ""
     },
     {
         "name": "ОП Бугры",
         "address": "Шоссейная улица, 58к1, Бугры, Всеволожский район, Ленинградская область",
         "phone": "+7(931)248-65-30",
-        "map_link": "https://yandex.ru/maps/-/CHfSrO~o",
-        "route_link": "https://yandex.ru/maps/?rtext=60.082135, 30.391964",
-        "federal_district": "Северо-Западный",
-        "city": "Ленинградская обл."
+        "latitude": 60.082135,
+        "longitude": 30.391964,
+        "additional_inf": ""
     },
     {
         "name": "ОП Санкт-Петербург",
@@ -33,60 +30,56 @@
         "map_link": "https://yandex.ru/maps/-/CHfSr-KI",
         "route_link": "https://yandex.ru/maps/?rtext=59.990940, 30.417953",
         "federal_district": "Северо-Западный",
-        "city": "Санкт-Петербург"
+        "latitude": 59.990940,
+        "longitude": 30.417953,
+        "additional_inf": "Заезд с Меншиковского. Перед приездом необходимо позвонить и оформить пропуск для КПП!"
     },
     {
         "name": "ОП Чехов",
         "address": "промышленная зона Лешино, вл1с1, муниципальный округ Чехов, Московская область, 142326",
         "phone": "+7(495)733-95-85,2107",
-        "map_link": "https://yandex.ru/maps/-/CHfSvVMu",
-        "route_link": "https://yandex.ru/maps/?rtext=55.146882, 37.583787",
-        "federal_district": "Центральный",
-        "city": "Московская обл."
+        "latitude": 55.146882,
+        "longitude": 37.583787,
+        "additional_inf": ""
     },
     {
         "name": "ОП Ворсино",
         "address": "улица Лыскина, вл7, село Ворсино, Боровский район, Калужская область, 249020",
         "phone": "+7(921)402-67-00",
-        "map_link": "https://yandex.ru/maps/-/CHfSvTPi",
-        "route_link": "https://yandex.ru/maps/?rtext=55.227566, 36.678725",
-        "federal_district": "Центральный",
-        "city": "Московская обл."
+        "latitude": 55.227566,
+        "longitude": 36.678725,
+        "additional_inf": ""
     },
     {
         "name": "ОП Екатеринбург",
         "address": "улица Черняховского, 86к19, подъезд 10, Екатеринбург, Свердловская область",
         "phone": "+7(922)173-07-74",
-        "map_link": "https://yandex.ru/maps/-/CHfSzMmF",
-        "route_link": "https://yandex.ru/maps/?rtext=56.760485, 60.745220",
-        "federal_district": "Уральский",
-        "city": "Екатеринбург"
+        "latitude": 56.760485,
+        "longitude": 60.745220,
+        "additional_inf": ""
     },
     {
         "name": "ОП Копейск",
         "address": "проспект Победы, 75, Копейск, Челябинская область, 456620",
         "phone": "+7(351)750-06-26",
-        "map_link": "https://yandex.ru/maps/-/CHfSzN-t",
-        "route_link": "https://yandex.ru/maps/?rtext=55.114729, 61.541379",
-        "federal_district": "Уральский",
-        "city": "Челябинская обл."
+        "latitude": 55.114729,
+        "longitude": 61.541379,
+        "additional_inf": ""
     },
     {
         "name": "ОП Толмачёво",
         "address": "улица 3307-й километр, 16/1, село Толмачёво, Новосибирский район",
         "phone": "+7(923)115-12-99",
-        "map_link": "https://yandex.ru/maps/-/CHfSz0ON",
-        "route_link": "https://yandex.ru/maps/?rtext=55.007251, 82.538376",
-        "federal_district": "Сибирский",
-        "city": "Новосибирск"
+        "latitude": 55.007251,
+        "longitude": 82.538376,
+        "additional_inf": ""
     },
     {
         "name": "ОП Ардон",
         "address": "Привокзальная улица, 11, Ардон, Республика Северная Осетия — Алания",
         "phone": "+7(928)068-52-17",
-        "map_link": "https://yandex.ru/maps/-/CHfSzXLZ",
-        "route_link": "https://yandex.ru/maps/?rtext=43.183164, 44.273424",
-        "federal_district": "Южный",
-        "city": "Ардон"
+        "latitude": 43.183164,
+        "longitude": 44.273424,
+        "additional_inf": ""
     }
 ]
