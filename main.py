@@ -12,7 +12,8 @@ dp = Dispatcher(bot)
 with open('warehouses.json', 'r', encoding='utf-8') as f:
     warehouses = json.load(f)
 
-cities = sorted(set(warehouse["city"] for warehouse in warehouses))
+# Получение списка складов
+warehouse_names = sorted(set(warehouse["name"] for warehouse in warehouses))
 
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
@@ -26,55 +27,41 @@ async def start_handler(message: types.Message):
 
 # Обработка команды "📍 Список складов"
 @dp.message_handler(lambda message: message.text == "📍 Список складов")
-async def list_cities(message: types.Message):
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for city in cities:
-        keyboard.add(city)
-    keyboard.add("⬅️ Назад")
-    await message.answer("Выберите город:", reply_markup=keyboard)
-
-# Обработка выбора города
-@dp.message_handler(lambda message: message.text in cities)
 async def list_warehouses(message: types.Message):
-    selected_city = message.text
-    warehouses_in_city = sorted(set(
-        warehouse["name"] for warehouse in warehouses if warehouse["city"].lower() == selected_city.lower()
-    ))
-    
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for warehouse_name in warehouses_in_city:
+    for warehouse_name in warehouse_names:
         keyboard.add(warehouse_name)
     keyboard.add("⬅️ Назад")
-    await message.answer(f"Выберите склад в городе {selected_city}:", reply_markup=keyboard)
+    await message.answer("Выберите склад:", reply_markup=keyboard)
 
 # Обработка выбора склада и отображение информации о складе
-@dp.message_handler(lambda message: message.text in [w['name'] for w in warehouses])
+@dp.message_handler(lambda message: message.text in warehouse_names)
 async def display_warehouse_info(message: types.Message):
     selected_warehouse_name = message.text
     matching_warehouses = [w for w in warehouses if w["name"].lower() == selected_warehouse_name.lower()]
-    
+
     if matching_warehouses:
         for warehouse in matching_warehouses:
             response = f"**Склад {warehouse['name']}:**\n"
             response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
             response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-
-            # Ссылка на схему проезда в Яндекс Навигаторе
-            if warehouse.get('map_link'):
-                lat, lon = warehouse['map_link'].split('=')[1].split(',')  # Получаем координаты из ссылки
-                map_url = f"yandexnavi://build_route_on_map?lat_to={lat}&lon_to={lon}"
-                response += f"**Схема проезда:** [Показать на карте]({map_url})\n"
             
-            # Ссылка на маршрут в Яндекс Навигаторе
-            if warehouse.get('route_link'):
-                lat, lon = warehouse['route_link'].split('=')[1].split(',')  # Получаем координаты из ссылки
-                route_url = f"yandexnavi://build_route?lat_to={lat}&lon_to={lon}"
-                response += f"**Маршрут:** [Показать маршрут]({route_url})\n"
+            # Формирование ссылок для Яндекс Навигатора с использованием координат
+            lat = warehouse['latitude']
+            lon = warehouse['longitude']
+            
+            # Ссылка на схему проезда в Яндекс Навигатор
+            map_url = f"yandexnavi://build_route_on_map?lat_to={lat}&lon_to={lon}"
+            response += f"**Схема проезда:** [Показать на карте]({map_url})\n"
+            
+            # Ссылка на маршрут в Яндекс Навигатор
+            route_url = f"yandexnavi://build_route?lat_to={lat}&lon_to={lon}"
+            response += f"**Маршрут:** [Показать маршрут]({route_url})\n"
 
             # Добавляем кнопку "⬅️ Назад"
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
             keyboard.add("⬅️ Назад")
-            
+
             await message.answer(response, parse_mode="Markdown", reply_markup=keyboard)
     else:
         await message.answer("К сожалению, склад с таким названием не найден. Попробуйте ещё раз.")
