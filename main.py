@@ -68,12 +68,9 @@ async def show_contacts(message: types.Message):
 @dp.message_handler(lambda message: message.text == "ℹ️ О компании")
 async def about_company(message: types.Message):
     await message.answer(
-        "Компания «Би Джи» — ведущий оператор складской логистики в России.
-"
-        "У нас — сеть современных складов класса A и B в ключевых регионах страны.
-
-"
-        "Больше информации на сайте: https://bg-logistic.ru/"
+        'Компания «Би Джи» — мы храним доверие!'
+        'У нас — сеть современных складов класса A и B в ключевых регионах страны.'
+        'Больше информации на сайте: https://bg-logistic.ru/'
     )
 
 @dp.message_handler()
