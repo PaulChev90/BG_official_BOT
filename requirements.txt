@@ -1,5 +1,3 @@
 aiogram==2.25.1
 python-dotenv==0.19.2
-aiohttp==3.8.6
-aiohttp[speedups]  # Добавляем для оптимизации производительности
-pip --upgrade  # Обновление pip до последней версии
+aiohttp==3.7.4  # Устанавливаем более стабильную версию aiohttp
