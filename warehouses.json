@@ -1,0 +1,72 @@
+[
+    {
+        "name": "ОП Горелово",
+        "address": "Волхонское шоссе, 9/2, территория Северная часть производственной зоны Горелово, Виллозское городское поселение, Ломоносовский район, Ленинградская область",
+        "phone": "+7(921)928-55-73",
+        "map_link": "https://yandex.ru/maps/-/CHfSnSI-",
+        "route_link": "https://yandex.ru/maps/?rtext=59.788352, 30.219623"
+    },
+    {
+        "name": "ОП Всеволожск",
+        "address": "Дизельная улица, 2А, Всеволожск, Ленинградская область",
+        "phone": "+7(921)589-87-82",
+        "map_link": "https://yandex.ru/maps/-/CHfSr40z",
+        "route_link": "https://yandex.ru/maps/?rtext=60.004874, 30.794392"
+    },
+    {
+        "name": "ОП Бугры",
+        "address": "Шоссейная улица, 58к1, Бугры, Всеволожский район, Ленинградская область",
+        "phone": "+7(921)248-65-30",
+        "map_link": "https://yandex.ru/maps/-/CHfSrO~o",
+        "route_link": "https://yandex.ru/maps/?rtext=60.082135, 30.391964"
+    },
+    {
+        "name": "ОП Санкт-Петербург",
+        "address": "проспект Непокорённых, 63к36, Санкт-Петербург, 195067",
+        "phone": "+7(931)370-95-39",
+        "map_link": "https://yandex.ru/maps/-/CHfSr-KI",
+        "route_link": "https://yandex.ru/maps/?rtext=59.990940, 30.417953"
+    },
+    {
+        "name": "ОП Чехов",
+        "address": "промышленная зона Лешино, вл1с1, муниципальный округ Чехов, Московская область, 142326",
+        "phone": "+7(926)236-26-36",
+        "map_link": "https://yandex.ru/maps/-/CHfSvVMu",
+        "route_link": "https://yandex.ru/maps/?rtext=55.146882, 37.583787"
+    },
+    {
+        "name": "ОП Ворсино",
+        "address": "улица Лыскина, вл7, село Ворсино, Боровский район, Калужская область, 249020",
+        "phone": "+7(921)402-67-00",
+        "map_link": "https://yandex.ru/maps/-/CHfSvTPi",
+        "route_link": "https://yandex.ru/maps/?rtext=55.227566, 36.678725"
+    },
+    {
+        "name": "ОП Екатеринбург",
+        "address": "улица Черняховского, 86к19, подъезд 10, Екатеринбург, Свердловская область",
+        "phone": "+7(921)761-11-83",
+        "map_link": "https://yandex.ru/maps/-/CHfSzMmF",
+        "route_link": "https://yandex.ru/maps/?rtext=56.760485, 60.745220"
+    },
+    {
+        "name": "ОП Копейск",
+        "address": "проспект Победы, 75, Копейск, Челябинская область, 456620",
+        "phone": "+7(351)750-06-26",
+        "map_link": "https://yandex.ru/maps/-/CHfSzN-t",
+        "route_link": "https://yandex.ru/maps/?rtext=55.114729, 61.541379"
+    },
+    {
+        "name": "ОП Толмачёво",
+        "address": "улица 3307-й километр, 16/1, село Толмачёво, Новосибирский район",
+        "phone": "+7(953)789-48-59",
+        "map_link": "https://yandex.ru/maps/-/CHfSz0ON",
+        "route_link": "https://yandex.ru/maps/?rtext=55.007251, 82.538376"
+    },
+    {
+        "name": "ОП Ардон",
+        "address": "Привокзальная улица, 11, Ардон, Республика Северная Осетия — Алания",
+        "phone": "+7(988)838-28-78",
+        "map_link": "https://yandex.ru/maps/-/CHfSzXLZ",
+        "route_link": "https://yandex.ru/maps/?rtext=43.183164, 44.273424"
+    }
+]
