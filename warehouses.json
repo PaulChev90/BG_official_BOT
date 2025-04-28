@@ -6,7 +6,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSnSI-",
         "route_link": "https://yandex.ru/maps/?rtext=59.788352, 30.219623",
         "federal_district": "Северо-Западный",
-        "city": "ЛО"
+        "city": "Ленинградская обл."
     },
     {
         "name": "ОП Всеволожск",
@@ -15,7 +15,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSr40z",
         "route_link": "https://yandex.ru/maps/?rtext=60.004874, 30.794392",
         "federal_district": "Северо-Западный",
-        "city": "ЛО"
+        "city": "Ленинградская обл."
     },
     {
         "name": "ОП Бугры",
@@ -24,7 +24,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSrO~o",
         "route_link": "https://yandex.ru/maps/?rtext=60.082135, 30.391964",
         "federal_district": "Северо-Западный",
-        "city": "ЛО"
+        "city": "Ленинградская обл."
     },
     {
         "name": "ОП Санкт-Петербург",
@@ -38,11 +38,11 @@
     {
         "name": "ОП Чехов",
         "address": "промышленная зона Лешино, вл1с1, муниципальный округ Чехов, Московская область, 142326",
-        "phone": "+7(926)236-26-36",
+        "phone": "+7(495)733-95-85,2107",
         "map_link": "https://yandex.ru/maps/-/CHfSvVMu",
         "route_link": "https://yandex.ru/maps/?rtext=55.146882, 37.583787",
         "federal_district": "Центральный",
-        "city": "МО"
+        "city": "Московская обл."
     },
     {
         "name": "ОП Ворсино",
@@ -51,12 +51,12 @@
         "map_link": "https://yandex.ru/maps/-/CHfSvTPi",
         "route_link": "https://yandex.ru/maps/?rtext=55.227566, 36.678725",
         "federal_district": "Центральный",
-        "city": "МО"
+        "city": "Московская обл."
     },
     {
         "name": "ОП Екатеринбург",
         "address": "улица Черняховского, 86к19, подъезд 10, Екатеринбург, Свердловская область",
-        "phone": "+7(921)761-11-83",
+        "phone": "+7(922)173-07-74",
         "map_link": "https://yandex.ru/maps/-/CHfSzMmF",
         "route_link": "https://yandex.ru/maps/?rtext=56.760485, 60.745220",
         "federal_district": "Уральский",
@@ -69,12 +69,12 @@
         "map_link": "https://yandex.ru/maps/-/CHfSzN-t",
         "route_link": "https://yandex.ru/maps/?rtext=55.114729, 61.541379",
         "federal_district": "Уральский",
-        "city": "ЧО"
+        "city": "Челябинская обл."
     },
     {
         "name": "ОП Толмачёво",
         "address": "улица 3307-й километр, 16/1, село Толмачёво, Новосибирский район",
-        "phone": "+7(953)789-48-59",
+        "phone": "+7(923)115-12-99",
         "map_link": "https://yandex.ru/maps/-/CHfSz0ON",
         "route_link": "https://yandex.ru/maps/?rtext=55.007251, 82.538376",
         "federal_district": "Сибирский",
@@ -83,7 +83,7 @@
     {
         "name": "ОП Ардон",
         "address": "Привокзальная улица, 11, Ардон, Республика Северная Осетия — Алания",
-        "phone": "+7(988)838-28-78",
+        "phone": "+7(928)068-52-17",
         "map_link": "https://yandex.ru/maps/-/CHfSzXLZ",
         "route_link": "https://yandex.ru/maps/?rtext=43.183164, 44.273424",
         "federal_district": "Южный",
