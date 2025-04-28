@@ -17,11 +17,20 @@ warehouse_names = sorted(set(warehouse["name"] for warehouse in warehouses))
 
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
+    # Отправляем логотип компании
+    await message.answer_photo(
+        photo="https://bg-logistic.ru/local/templates/bg-logistic/images/header-logo-new.svg", 
+        caption="Добро пожаловать в официальный бот компании «Би Джи»!"
+    )
+
+    # Создаем клавиатуру с кнопками
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     buttons = ["📍 Список складов", "📞 Контакты", "ℹ️ О компании"]
     keyboard.add(*buttons)
+
+    # Отправляем сообщение с клавиатурой
     await message.answer(
-        'Добро пожаловать в официальный бот компании «Би Джи»!\nВыберите нужный раздел:',
+        'Выберите нужный раздел:',
         reply_markup=keyboard
     )
 
