@@ -6,7 +6,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSnSI-",
         "route_link": "https://yandex.ru/maps/?rtext=59.788352, 30.219623",
         "federal_district": "Северо-Западный",
-        "city": "Горелово"
+        "city": "ЛО"
     },
     {
         "name": "ОП Всеволожск",
@@ -15,7 +15,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSr40z",
         "route_link": "https://yandex.ru/maps/?rtext=60.004874, 30.794392",
         "federal_district": "Северо-Западный",
-        "city": "Всеволожск"
+        "city": "ЛО"
     },
     {
         "name": "ОП Бугры",
@@ -24,7 +24,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSrO~o",
         "route_link": "https://yandex.ru/maps/?rtext=60.082135, 30.391964",
         "federal_district": "Северо-Западный",
-        "city": "Бугры"
+        "city": "ЛО"
     },
     {
         "name": "ОП Санкт-Петербург",
@@ -42,7 +42,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSvVMu",
         "route_link": "https://yandex.ru/maps/?rtext=55.146882, 37.583787",
         "federal_district": "Центральный",
-        "city": "Чехов"
+        "city": "МО"
     },
     {
         "name": "ОП Ворсино",
@@ -51,7 +51,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSvTPi",
         "route_link": "https://yandex.ru/maps/?rtext=55.227566, 36.678725",
         "federal_district": "Центральный",
-        "city": "Ворсино"
+        "city": "МО"
     },
     {
         "name": "ОП Екатеринбург",
@@ -69,7 +69,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSzN-t",
         "route_link": "https://yandex.ru/maps/?rtext=55.114729, 61.541379",
         "federal_district": "Уральский",
-        "city": "Копейск"
+        "city": "ЧО"
     },
     {
         "name": "ОП Толмачёво",
@@ -78,7 +78,7 @@
         "map_link": "https://yandex.ru/maps/-/CHfSz0ON",
         "route_link": "https://yandex.ru/maps/?rtext=55.007251, 82.538376",
         "federal_district": "Сибирский",
-        "city": "Толмачёво"
+        "city": "Новосибирск"
     },
     {
         "name": "ОП Ардон",
