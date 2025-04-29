@@ -121,7 +121,7 @@ if __name__ == '__main__':
     start_webhook(
         dispatcher=dp,
         webhook_path=f'/{BOT_TOKEN}',
-        on_start=on_start,
+        on_startup=on_startup,
         host='0.0.0.0',
         port=10000
     )
