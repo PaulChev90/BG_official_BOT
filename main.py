@@ -1,21 +1,23 @@
 import os
 import json
-from aiogram import Bot, Dispatcher, types
-from aiogram.utils import executor
+from aiogram import Bot, Dispatcher, types, executor
 
-# Получаем токен бота из переменных окружения
+# Получаем токен из переменных окружения
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("Переменная окружения BOT_TOKEN не установлена")
 
+# Инициализация бота
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
-# Загружаем информацию о складах
+# Загрузка данных о складах
 with open('warehouses.json', 'r', encoding='utf-8') as f:
     warehouses = json.load(f)
 
 warehouse_names = sorted(set(warehouse["name"] for warehouse in warehouses))
 
-# Стартовое меню
+# Обработка команды /start
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -35,29 +37,32 @@ async def list_warehouses(message: types.Message):
     keyboard.add("⬅️ Назад")
     await message.answer("Выберите склад:", reply_markup=keyboard)
 
-# Отображение информации по складу
+# Информация по складу
 @dp.message_handler(lambda message: message.text in warehouse_names)
 async def display_warehouse_info(message: types.Message):
     selected = message.text
     matches = [w for w in warehouses if w["name"].lower() == selected.lower()]
 
     if matches:
-        for w in matches:
-            response = f"**Склад {w['name']}:**\n"
-            response += f"**Адрес:** {w.get('address', 'Не указано')}\n"
-            response += f"**Телефон:** {w.get('phone', 'Не указано')}\n"
-            lat = w['latitude']
-            lon = w['longitude']
-            url = f"https://yandex.ru/maps/?rtext=~{lat},{lon}"
-            response += f"**Маршрут:** [Показать маршрут]({url})\n"
+        for warehouse in matches:
+            lat = warehouse.get("latitude")
+            lon = warehouse.get("longitude")
+            route_url = f"https://yandex.ru/maps/?rtext=~{lat},{lon}"
+
+            response = (
+                f"*Склад {warehouse['name']}*\n"
+                f"*Адрес:* {warehouse.get('address', 'Не указано')}\n"
+                f"*Телефон:* {warehouse.get('phone', 'Не указано')}\n"
+                f"[Показать маршрут]({route_url})"
+            )
 
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
             keyboard.add("⬅️ Назад")
             await message.answer(response, parse_mode="Markdown", reply_markup=keyboard)
     else:
-        await message.answer("Склад не найден. Попробуйте ещё раз.")
+        await message.answer("Склад не найден. Попробуйте снова.")
 
-# Назад
+# Кнопка "Назад"
 @dp.message_handler(lambda message: message.text == "⬅️ Назад")
 async def go_back(message: types.Message):
     await start_handler(message)
@@ -79,10 +84,10 @@ async def show_contacts(message: types.Message):
 async def about_company(message: types.Message):
     await message.answer(
         'Компания «Би Джи» — мы храним доверие!\n'
-        'У нас — сеть современных складов класса A и B в ключевых регионах страны.\n'
-        'Больше информации на сайте: https://bg-logistic.ru/'
+        'Сеть современных складов класса A и B в ключевых регионах страны.\n'
+        'Сайт: https://bg-logistic.ru/'
     )
 
-# Запуск long polling
+# Запуск бота
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
