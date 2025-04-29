@@ -1,21 +1,21 @@
 import os
 import json
 from aiogram import Bot, Dispatcher, types
-from aiogram.utils.executor import start_webhook
+from aiogram.utils import executor
 
+# Получаем токен бота из переменных окружения
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-WEBHOOK_HOST = os.getenv("RENDER_EXTERNAL_URL", "https://your-bot.onrender.com")  # Render сам создаёт эту переменную
-WEBHOOK_PATH = f"/webhook/{BOT_TOKEN}"
-WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
+# Загружаем информацию о складах
 with open('warehouses.json', 'r', encoding='utf-8') as f:
     warehouses = json.load(f)
 
 warehouse_names = sorted(set(warehouse["name"] for warehouse in warehouses))
 
+# Стартовое меню
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -26,40 +26,43 @@ async def start_handler(message: types.Message):
         reply_markup=keyboard
     )
 
+# Список складов
 @dp.message_handler(lambda message: message.text == "📍 Список складов")
 async def list_warehouses(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    for warehouse_name in warehouse_names:
-        keyboard.add(warehouse_name)
+    for name in warehouse_names:
+        keyboard.add(name)
     keyboard.add("⬅️ Назад")
     await message.answer("Выберите склад:", reply_markup=keyboard)
 
+# Отображение информации по складу
 @dp.message_handler(lambda message: message.text in warehouse_names)
 async def display_warehouse_info(message: types.Message):
-    selected_warehouse_name = message.text
-    matching_warehouses = [w for w in warehouses if w["name"].lower() == selected_warehouse_name.lower()]
+    selected = message.text
+    matches = [w for w in warehouses if w["name"].lower() == selected.lower()]
 
-    if matching_warehouses:
-        for warehouse in matching_warehouses:
-            response = f"**Склад {warehouse['name']}:**\n"
-            response += f"**Адрес:** {warehouse.get('address', 'Не указано')}\n"
-            response += f"**Телефон:** {warehouse.get('phone', 'Не указано')}\n"
-            lat = warehouse['latitude']
-            lon = warehouse['longitude']
-            route_url = f"https://yandex.ru/maps/?rtext=~{lat},{lon}"
-            response += f"**Маршрут:** [Показать маршрут]({route_url})\n"
+    if matches:
+        for w in matches:
+            response = f"**Склад {w['name']}:**\n"
+            response += f"**Адрес:** {w.get('address', 'Не указано')}\n"
+            response += f"**Телефон:** {w.get('phone', 'Не указано')}\n"
+            lat = w['latitude']
+            lon = w['longitude']
+            url = f"https://yandex.ru/maps/?rtext=~{lat},{lon}"
+            response += f"**Маршрут:** [Показать маршрут]({url})\n"
 
             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
             keyboard.add("⬅️ Назад")
-
             await message.answer(response, parse_mode="Markdown", reply_markup=keyboard)
     else:
-        await message.answer("К сожалению, склад с таким названием не найден. Попробуйте ещё раз.")
+        await message.answer("Склад не найден. Попробуйте ещё раз.")
 
+# Назад
 @dp.message_handler(lambda message: message.text == "⬅️ Назад")
 async def go_back(message: types.Message):
     await start_handler(message)
 
+# Контакты
 @dp.message_handler(lambda message: message.text == "📞 Контакты")
 async def show_contacts(message: types.Message):
     await message.answer(
@@ -71,6 +74,7 @@ async def show_contacts(message: types.Message):
         disable_web_page_preview=True
     )
 
+# О компании
 @dp.message_handler(lambda message: message.text == "ℹ️ О компании")
 async def about_company(message: types.Message):
     await message.answer(
@@ -79,19 +83,6 @@ async def about_company(message: types.Message):
         'Больше информации на сайте: https://bg-logistic.ru/'
     )
 
-async def on_startup(dp):
-    await bot.set_webhook(WEBHOOK_URL)
-
-async def on_shutdown(dp):
-    await bot.delete_webhook()
-
+# Запуск long polling
 if __name__ == '__main__':
-    start_webhook(
-        dispatcher=dp,
-        webhook_path=WEBHOOK_PATH,
-        on_startup=on_startup,
-        on_shutdown=on_shutdown,
-        skip_updates=True,
-        host='0.0.0.0',
-        port=int(os.environ.get('PORT', 5000))
-    )
+    executor.start_polling(dp, skip_updates=True)
