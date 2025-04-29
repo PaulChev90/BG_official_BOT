@@ -1,4 +1,4 @@
-app = "BG_official_BOT" # заменишь на своё имя при создании в Fly.io
+app = "bgofficialbot" # заменишь на своё имя при создании в Fly.io
 
 [env]
   BOT_TOKEN = "replace_this" # потом зададим как секрет
