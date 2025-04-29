@@ -1,0 +1,15 @@
+app = "BG_official_BOT" # заменишь на своё имя при создании в Fly.io
+
+[env]
+  BOT_TOKEN = "replace_this" # потом зададим как секрет
+
+[build]
+  image = "python:3.11-slim"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
